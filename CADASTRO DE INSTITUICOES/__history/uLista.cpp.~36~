@@ -1,0 +1,242 @@
+//---------------------------------------------------------------------------
+#include <iostream>
+#include <fstream>
+#include <string>
+#include <vcl.h>
+#include <cstdlib>
+#include <ctime>
+#include <Jpeg.hpp>
+#include <pngimage.hpp>
+#include "uPrincipal.h"
+#include "UtilUnit.h"
+
+#pragma hdrstop
+
+#include "uLista.h"
+//---------------------------------------------------------------------------
+
+using namespace std;
+#pragma package(smart_init)
+#pragma resource "*.dfm"
+TfrmLista *frmLista;
+TStringGrid *grid;
+//TForm1 *Form1;
+TfrmCadInst *frmCadInst;
+TBitmap *BmpImg = NULL;
+TBitmap *BmpImg1 = new TBitmap();
+TJPEGImage *JpgImg = NULL;
+TPngImage *pngImg = NULL;
+TListBox * lstEscolas;
+TSQLConnection *SQLConnection2;
+TMemoryStream *StreamImagem;
+TOpenDialog *AbreLogo;
+TBitmap** imagensDoBanco = NULL;
+TBitmap *BmpImgGrid = new TBitmap();
+TImage *imagem = new TImage(NULL);
+
+
+//--------------------------------------------
+__fastcall TfrmLista::TfrmLista(TComponent* Owner)
+	: TForm(Owner)
+{
+}
+//---------------------------------------------------------------------------
+
+TSQLConnection* ConectaBD();
+
+
+
+void __fastcall TfrmLista::FormCreate(TObject *Sender)
+{
+
+    // Inicia as conexões com o banco de dados.
+    TSQLConnection* Conexao = ConectaBD();
+    TSQLQuery *query = new TSQLQuery(NULL);
+    query->SQLConnection = Conexao;
+
+    // Consultar o tamanho do banco para configurar o grid.
+    query->SQL->Add("select count(*) from dbo.INSTITUICAO;");
+    query->Open();
+
+    // numero de linhas do grind é o n° de linhas do banco.
+    int numeroLinhas = query->Fields->Fields[0]->AsInteger;
+
+    // aloca um vetor struct logos de tamanho igual ao banco.
+    vetorLogos = new logos[numeroLinhas+1];
+
+
+    // confgura o grid de acordo com o banco e os tamanho setados.
+
+    try {
+
+        grid->RowCount = (numeroLinhas+1);
+        grid->ColCount = 2;
+        grid->FixedRows = 1;
+        grid->ColWidths[0] = 130;
+        grid->ColWidths[1] = 300;
+
+        grid->Cells[0][0] = String("Logo");
+        grid->Cells[1][0] = String("Nome da Instituição");
+
+        
+
+        for (int j = 1; j <= numeroLinhas; ++j){
+
+            grid->RowHeights[j] = 130;
+
+        }
+
+    }
+    catch (...) {
+      
+    }
+
+
+
+
+    // elimina query inicial
+    query->Close();
+    query->SQL->Clear();
+    delete query;
+
+    
+    // ----------------------------------------------------------------------------
+    // query para consultas aos dados das instituições.
+	TSQLQuery *Consulta = new TSQLQuery(NULL);
+
+    // Primeiro pegar o id e nome da instituição depois, usa a id para pega as logos corretamente.
+    Consulta->SQLConnection = Conexao;
+    Consulta->SQL->Add("SELECT idInstifuicao,nomeIntituicao FROM dbo.INSTITUICAO");
+	Consulta->Open();
+
+    for (int i = 1; i <= numeroLinhas; ++i){
+
+        vetorLogos[i].id = Consulta->Fields->Fields[0]->AsInteger;
+        String recebeNome = Consulta->Fields->Fields[1]->AsString;
+        vetorLogos[i].nome = recebeNome.c_str();
+         Consulta->Next();
+
+    }
+
+    
+    AnsiString id;
+
+    for (int i = 1; i <= numeroLinhas; ++i){
+
+        id = IntToStr(vetorLogos[i].id);
+
+        TStream* Stream = new TMemoryStream();
+        TBitmap* Bitmap = new TBitmap();
+        
+        Consulta->Close();
+        Consulta->SQL->Clear();
+        Consulta->SQL->Add("SELECT logoIntituicao FROM INSTITUICAO WHERE idInstifuicao = " + id);
+        Consulta->Open();
+        Stream = Consulta->CreateBlobStream(Consulta->FieldByName("logoIntituicao"), bmRead);
+        
+        Bitmap->LoadFromStream(Stream);
+      	vetorLogos[i].bitmap = Bitmap;
+        delete Stream;  
+    }
+
+    grid->Color = clWebSteelBlue;
+
+    delete Consulta;
+    delete  Conexao;
+
+}
+//---------------------------------------------------------------------------
+
+
+
+
+
+
+
+
+
+
+TSQLConnection* ConectaBD()
+{
+
+	TSQLConnection *SQLConnection2 = new TSQLConnection(NULL);
+	SQLConnection2->ConnectionName = "MSSQLConnection";
+	SQLConnection2->DriverName = "MSSQL";
+	SQLConnection2->GetDriverFunc = "getSQLDriverMSSQL";
+	SQLConnection2->KeepConnection = true;
+	SQLConnection2->LibraryName = "dbxmss.dll";
+	SQLConnection2->LoginPrompt = false;
+	SQLConnection2->LoadParamsOnConnect = false;
+	SQLConnection2->Name = "SQLConnection2";
+	SQLConnection2->Tag = 0;
+	SQLConnection2->VendorLib = "oledb";
+	SQLConnection2->Params->Clear();
+	SQLConnection2->Params->Append("DriverName=MSSQL");
+	SQLConnection2->Params->Append("HostName=localhost\\KAPTUREALL");
+	SQLConnection2->Params->Append("DataBase=Easy51");
+	SQLConnection2->Params->Append("User_Name=sa");
+	SQLConnection2->Params->Append("Password=K4ptur34ll");
+	SQLConnection2->Params->Append("BlobSize=-1");
+	SQLConnection2->Params->Append("ErrorResourceFile=");
+	SQLConnection2->Params->Append("LocaleCode=0000");
+	SQLConnection2->Params->Append("MSSQL TransIsolation=ReadCommited");
+	SQLConnection2->Params->Append("OS Authentication=False");
+	SQLConnection2->Params->Append("Prepare SQL=False");
+	try
+	{
+		SQLConnection2->Connected = true;
+		return SQLConnection2;
+	}
+	catch(Exception &ex)
+	{
+		delete SQLConnection2;
+		return NULL;
+	}
+
+}
+
+void __fastcall TfrmLista::gridDrawCell(TObject *Sender, int ACol, int ARow, TRect &Rect,
+          TGridDrawState State)
+{
+
+      
+	if ((ACol == 0) && (ARow >= 1))
+    	{
+
+		grid->Canvas->StretchDraw(Rect, vetorLogos[ARow].bitmap);
+         grid->Cells[1][ARow] = vetorLogos[ARow].nome;
+        grid->Canvas->TextRect(Rect, Rect.Left + ((Rect.Right - Rect.Left) / 2), Rect.Top + 2, grid->Cells[ACol][ARow]);
+
+               //	grid->Canvas->TextRect(Rect, Rect.Left + ((Rect.Right - Rect.Left) / 2), Rect.Top + 2, grid->Cells[ACol][ARow]); // alinha o texto no centro da célula
+	}
+
+
+	if ((ACol == 1) && (ARow >= 1)){
+		 // alinha o texto no centro da célula
+
+
+	}
+
+
+
+
+}
+
+
+
+//---------------------------------------------------------------------------
+
+void __fastcall TfrmLista::gridClick(TObject *Sender)
+{
+
+
+  		// no topo
+    grid->TopRow = grid->Row - grid->VisibleRowCount / 2; // move a linha para o meio do grid
+    //grid->EnsureVisible(grid->Col, grid->Row, false); // garante que a linha seja visível
+
+
+
+
+}
+//---------------------------------------------------------------------------
+

@@ -1,0 +1,12 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<BorlandProject>
+	<Transactions>
+    <Transaction>2023/05/31 21:54:56.000.388,=C:\Users\Antonielson\Documents\Embarcadero\Studio\Projects\Unit1.cpp</Transaction>
+    <Transaction>2023/05/31 21:54:56.000.353,=C:\Users\Antonielson\Documents\Embarcadero\Studio\Projects\Project1PCH1.h</Transaction>
+    <Transaction>2023/05/31 21:55:43.000.661,C:\Users\Antonielson\Documents\Embarcadero\Studio\Projects\Unit1.h=C:\Users\Antonielson\Desktop\ProjetoModulo\uPrincipal.h</Transaction>
+    <Transaction>2023/05/31 21:55:43.000.661,C:\Users\Antonielson\Documents\Embarcadero\Studio\Projects\Unit1.cpp=C:\Users\Antonielson\Desktop\ProjetoModulo\uPrincipal.cpp</Transaction>
+    <Transaction>2023/05/31 21:55:43.000.661,C:\Users\Antonielson\Documents\Embarcadero\Studio\Projects\Unit1.dfm=C:\Users\Antonielson\Desktop\ProjetoModulo\uPrincipal.dfm</Transaction>
+    <Transaction>2023/05/31 21:55:55.000.886,C:\Users\Antonielson\Documents\Embarcadero\Studio\Projects\Project1PCH1.h=C:\Users\Antonielson\Desktop\ProjetoModulo\projetoModulo.h</Transaction>
+    <Transaction>2023/05/31 21:56:10.000.651,C:\Users\Antonielson\Documents\Embarcadero\Studio\Projects\Project1.cbproj=C:\Users\Antonielson\Desktop\ProjetoModulo\projeto.cbproj</Transaction>
+  </Transactions>
+</BorlandProject>

@@ -1,0 +1,16 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<BorlandProject>
+	<Transactions>
+    <Transaction>2023/04/09 14:49:09.000.238,=C:\Users\Antonielson\Documents\Embarcadero\Studio\Projects\Unit1.cpp</Transaction>
+    <Transaction>2023/04/09 14:49:09.000.196,=C:\Users\Antonielson\Documents\Embarcadero\Studio\Projects\Project1PCH1.h</Transaction>
+    <Transaction>2023/04/09 14:49:25.000.506,C:\Users\Antonielson\Documents\Embarcadero\Studio\Projects\Unit1.dfm=C:\Users\Antonielson\Desktop\projeto\uPrincipal.dfm</Transaction>
+    <Transaction>2023/04/09 14:49:25.000.506,C:\Users\Antonielson\Documents\Embarcadero\Studio\Projects\Unit1.cpp=C:\Users\Antonielson\Desktop\projeto\uPrincipal.cpp</Transaction>
+    <Transaction>2023/04/09 14:49:25.000.506,C:\Users\Antonielson\Documents\Embarcadero\Studio\Projects\Unit1.h=C:\Users\Antonielson\Desktop\projeto\uPrincipal.h</Transaction>
+    <Transaction>2023/04/09 14:49:29.000.613,C:\Users\Antonielson\Documents\Embarcadero\Studio\Projects\Project1PCH1.h=C:\Users\Antonielson\Desktop\projeto\projeto.h</Transaction>
+    <Transaction>2023/04/09 14:49:39.000.445,C:\Users\Antonielson\Documents\Embarcadero\Studio\Projects\Project1.cbproj=C:\Users\Antonielson\Desktop\projeto\projetoTela.cbproj</Transaction>
+    <Transaction>2023/04/30 17:38:40.000.020,=C:\Users\Antonielson\Desktop\telaCadInstituicao\Unit2.cpp</Transaction>
+    <Transaction>2023/04/30 17:39:09.000.068,C:\Users\Antonielson\Desktop\telaCadInstituicao\uLista.h=C:\Users\Antonielson\Desktop\telaCadInstituicao\Unit2.h</Transaction>
+    <Transaction>2023/04/30 17:39:09.000.068,C:\Users\Antonielson\Desktop\telaCadInstituicao\uLista.cpp=C:\Users\Antonielson\Desktop\telaCadInstituicao\Unit2.cpp</Transaction>
+    <Transaction>2023/04/30 17:39:09.000.068,C:\Users\Antonielson\Desktop\telaCadInstituicao\uLista.dfm=C:\Users\Antonielson\Desktop\telaCadInstituicao\Unit2.dfm</Transaction>
+  </Transactions>
+</BorlandProject>

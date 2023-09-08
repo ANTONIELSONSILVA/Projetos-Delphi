@@ -1,0 +1,41 @@
+object frmLista: TfrmLista
+  Left = 0
+  Top = 0
+  Caption = 'frmLista'
+  ClientHeight = 345
+  ClientWidth = 683
+  Color = clBtnFace
+  Font.Charset = DEFAULT_CHARSET
+  Font.Color = clWindowText
+  Font.Height = -11
+  Font.Name = 'Tahoma'
+  Font.Style = []
+  OldCreateOrder = False
+  OnCreate = FormCreate
+  PixelsPerInch = 96
+  TextHeight = 13
+  object grid: TStringGrid
+    Left = 24
+    Top = 24
+    Width = 521
+    Height = 249
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clWindowText
+    Font.Height = -16
+    Font.Name = 'Segoe UI Light'
+    Font.Style = []
+    ParentFont = False
+    TabOrder = 0
+    OnClick = gridClick
+    OnDrawCell = gridDrawCell
+  end
+  object SQLConnection1: TSQLConnection
+    Left = 608
+    Top = 72
+  end
+  object SQLQuery1: TSQLQuery
+    Params = <>
+    Left = 608
+    Top = 120
+  end
+end
